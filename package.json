@@ -1,6 +1,6 @@
 {
   "name": "finch-db",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple Typescript sqlite3 db for finch.",
   "author": "BenjaminHsu",
   "license": "MIT",
