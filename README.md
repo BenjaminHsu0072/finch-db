@@ -4,7 +4,7 @@ A typescript database tool for using finch and sqlite3.
 
 #### Usage
 ```typescript
-import {db, createTable, inData, alData, deData, upData, dbDataType} from "./index";
+import {db, createTable, inData, alData, deData, upData, dbDataType} from "finch-db";
 
 let theTableDefine = {
     id: dbDataType.INTEGER,
