@@ -3,20 +3,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("./index");
 let theTableDefine = {
     id: index_1.dbDataType.INTEGER,
-    name: index_1.dbDataType.TEXT,
+    name: index_1.dbDataType.TEXT_UNIQUE,
     number: index_1.dbDataType.REAL
 };
-index_1.createTable('theTable', theTableDefine, (e) => {
-    if (e) {
-        console.log(e);
-    }
-});
+// createTable('theTable', theTableDefine,
+//     (e) => {
+//         if (e) {
+//             console.log(e)
+//         }
+//     });
 let insertData = {
     id: 0,
-    name: "Mike",
+    name: "Ben",
     number: 123.4567,
 };
-index_1.inData('theTable', insertData, (err) => {
+index_1.inData('theTable', insertData, (err, id) => {
+    console.log(id);
     if (err) {
         console.log(err);
     }

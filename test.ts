@@ -2,7 +2,7 @@ import {db, createTable, inData, alData, deData, upData, dbDataType} from "./ind
 
 let theTableDefine = {
     id: dbDataType.INTEGER,
-    name: dbDataType.TEXT,
+    name: dbDataType.TEXT_UNIQUE,
     number: dbDataType.REAL
 };
 
@@ -12,19 +12,20 @@ interface theTableData {
     number: number
 }
 
-createTable('theTable', theTableDefine,
-    (e) => {
-        if (e) {
-            console.log(e)
-        }
-    });
+// createTable('theTable', theTableDefine,
+//     (e) => {
+//         if (e) {
+//             console.log(e)
+//         }
+//     });
 
 let insertData: theTableData = {
     id: 0,
-    name: "Mike",
+    name: "Ben",
     number: 123.4567,
 };
-inData('theTable', insertData, (err) => {
+inData('theTable', insertData, (err,id) => {
+    console.log(id);
     if (err) {
         console.log(err)
     }

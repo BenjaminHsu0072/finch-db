@@ -8,6 +8,7 @@ var dbDataType;
     dbDataType[dbDataType["INTEGER"] = 0] = "INTEGER";
     dbDataType[dbDataType["REAL"] = 1] = "REAL";
     dbDataType[dbDataType["TEXT"] = 2] = "TEXT";
+    dbDataType[dbDataType["TEXT_UNIQUE"] = 3] = "TEXT_UNIQUE";
 })(dbDataType || (dbDataType = {}));
 exports.dbDataType = dbDataType;
 function createTable(tableName, object, callback) {
@@ -17,7 +18,7 @@ function createTable(tableName, object, callback) {
             sql += "id INTEGER PRIMARY KEY AUTOINCREMENT,";
         }
         else {
-            sql += `${a} ${dbDataType[object[a]]},`;
+            sql += `${a} ${dbDataType[object[a]].replace(/_/g, " ")},`;
         }
     }
     sql = sql.slice(0, -1);
@@ -48,8 +49,21 @@ function inData(tableName, dataObject, callback) {
     keys = keys.slice(0, -1);
     values = values.slice(0, -1);
     db.run(`INSERT INTO ${tableName} (${keys}) VALUES (${values})`, (err) => {
-        if (callback)
-            callback(err);
+        if (err) {
+            if (callback)
+                callback(err, 0);
+            return;
+        }
+        db.get(`SELECT last_insert_rowid() from ${tableName}`, (er, data) => {
+            if (er) {
+                if (callback)
+                    callback(er, 0);
+                return;
+            }
+            let id = data["last_insert_rowid()"];
+            if (callback)
+                callback(er, id);
+        });
     });
 }
 exports.inData = inData;
